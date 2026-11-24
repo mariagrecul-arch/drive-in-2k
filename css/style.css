@@ -6,25 +6,25 @@
 /* ---------- Eigene Schriften (T2) ---------- */
 @font-face {
   font-family: "Unbounded";
-  src: url("../fonts/unbounded.woff2") format("woff2");
+  src: url("../unbounded.woff2") format("woff2");
   font-weight: 200 900;
   font-display: swap;
 }
 @font-face {
   font-family: "VT323";
-  src: url("../fonts/vt323.woff2") format("woff2");
+  src: url("../vt323.woff2") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "Space Grotesk";
-  src: url("../fonts/spacegrotesk-400.woff2") format("woff2");
+  src: url("../spacegrotesk-400.woff2") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "Space Grotesk";
-  src: url("../fonts/spacegrotesk-700.woff2") format("woff2");
+  src: url("../spacegrotesk-700.woff2") format("woff2");
   font-weight: 700;
   font-display: swap;
 }
@@ -62,7 +62,7 @@ body {
   line-height: 1.65;
   color: var(--hell);
   background-color: var(--dunkel);
-  background-image: url("../img/muster-sterne.svg");
+  background-image: url("../muster-sterne.svg");
   background-size: 64px 64px;
   overflow-x: hidden;
 }
@@ -495,7 +495,7 @@ h2::before {
   width: .7em;
   height: .7em;
   margin-right: .35em;
-  background: url("../img/icon-stern.svg") center / contain no-repeat;
+  background: url("../icon-stern.svg") center / contain no-repeat;
   vertical-align: -.02em;
 }
 h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: var(--hell); }
@@ -556,7 +556,7 @@ h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: var(--
   content: "";
   width: 40px;
   height: 10px;
-  background: url("../img/fensterknoepfe.svg") left center / contain no-repeat;
+  background: url("../fensterknoepfe.svg") left center / contain no-repeat;
 }
 .fenster-inhalt { padding: 1rem 1.25rem 1.25rem; }
 .fenster-inhalt h3 { margin-top: .25rem; }
