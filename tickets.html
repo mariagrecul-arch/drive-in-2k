@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tickets & Firmenpakete – Drive-In 2K Autokino</title>
+  <meta name="description" content="Firmenpakete für das Autokino Drive-In 2K: Team S, Team M oder die ganze Wiese exklusiv. Jetzt unverbindlich für euer Teamevent anfragen.">
+  <meta name="theme-color" content="#2A1446">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+  <header class="kopf">
+    <div class="kopf-innen">
+      <a class="logo" href="index.html"><img src="img/logo.svg" alt="Drive-In 2K – zur Startseite" width="264" height="48"></a>
+      <nav class="hauptnav" aria-label="Hauptnavigation">
+        <ul>
+        <li><a href="index.html">Start</a></li>
+        <li><a href="programm.html">Programm</a></li>
+        <li><a href="story.html">Story</a></li>
+        <li><a href="tickets.html" aria-current="page">Tickets</a></li>
+        <li><a href="infos.html">Infos</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="ticker" aria-hidden="true"><p>+++ SAISON 2027: 7 FILMABENDE UNTERM STERNENHIMMEL +++ EXKLUSIV FÜR TEAMS & FIRMEN +++ TON ÜBERS AUTORADIO AUF 87,6 MHZ +++ POPCORN INKLUSIVE +++ BACK TO 2000 +++</p></div>
+  </header>
+  <main id="inhalt">
+    <div class="seitenkopf">
+      <h1>Tickets &amp; Firmenpakete</h1>
+      <p class="lead">Bei Drive-In 2K bucht ihr nicht einzelne Plätze, sondern Pakete für euer Team. Alle Preise verstehen sich pro Abend zuzüglich Mehrwertsteuer. Nach eurer Anfrage melden wir uns innerhalb von zwei Werktagen mit einem Angebot.</p>
+    </div>
+
+    <section class="bereich" aria-labelledby="h-pakete">
+      <h2 id="h-pakete">Unsere Pakete</h2>
+      <div class="raster">
+        <article class="fenster">
+          <div class="fenster-titel">team_s.exe</div>
+          <div class="fenster-inhalt">
+            <h3>Team S</h3>
+            <p class="preis">490 €</p>
+            <ul class="haken">
+              <li>bis 5 Autos, bis 20 Personen</li>
+              <li>Stellplätze nebeneinander</li>
+              <li>Popcorn und ein Getränk pro Person</li>
+              <li>Teilnahme am Y2K-Quiz</li>
+            </ul>
+          </div>
+        </article>
+        <article class="fenster">
+          <div class="fenster-titel">team_m.exe</div>
+          <div class="fenster-inhalt">
+            <h3>Team M</h3>
+            <p class="preis">990 €</p>
+            <ul class="haken">
+              <li>bis 12 Autos, bis 48 Personen</li>
+              <li>eigener Block mit Wunschreihe</li>
+              <li>Food-Truck-Bons über 15 € pro Person</li>
+              <li>Fotobox-Galerie fürs Intranet</li>
+            </ul>
+          </div>
+        </article>
+        <article class="fenster">
+          <div class="fenster-titel">exklusiv.exe</div>
+          <div class="fenster-inhalt">
+            <h3>Ganze Wiese exklusiv</h3>
+            <p class="preis">ab 4.900 €</p>
+            <ul class="haken">
+              <li>bis 60 Autos, bis 240 Personen</li>
+              <li>Wunschfilm aus unserer Liste</li>
+              <li>Firmenlogo im Vorfilm</li>
+              <li>Moderation von Quiz und Siegerehrung</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="bereich" id="anfrage" aria-labelledby="h-anfrage">
+      <h2 id="h-anfrage">Unverbindlich anfragen</h2>
+      <p>Felder mit <span class="pflicht">*</span> sind Pflichtfelder. Euren Wunschplatz könnt ihr vorher auf der <a href="index.html">Startseite</a> im Pixel-Autokino aussuchen.</p>
+      <form class="formular" id="ticket-formular" action="tickets.html#danke" method="get">
+        <div class="feld">
+          <label for="firma">Firma <span class="pflicht">*</span></label>
+          <input id="firma" name="firma" type="text" autocomplete="organization" required>
+        </div>
+        <div class="feld">
+          <label for="name">Ansprechperson <span class="pflicht">*</span></label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="feld">
+          <label for="email">E-Mail <span class="pflicht">*</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="feld">
+          <label for="telefon">Telefon</label>
+          <input id="telefon" name="telefon" type="tel" autocomplete="tel">
+        </div>
+        <div class="feld">
+          <label for="termin">Filmabend <span class="pflicht">*</span></label>
+          <select id="termin" name="termin" required>
+            <option value="">Bitte wählen</option>
+            <option value="2027-06-11">Fr, 11. Juni – Ocean’s Eleven (2001)</option>
+            <option value="2027-06-25">Fr, 25. Juni – Findet Nemo (2003)</option>
+            <option value="2027-07-09">Fr, 9. Juli – Die Unglaublichen (2004)</option>
+            <option value="2027-07-23">Fr, 23. Juli – Kick It Like Beckham (2002)</option>
+            <option value="2027-08-06">Fr, 6. August – Der Teufel trägt Prada (2006)</option>
+            <option value="2027-08-20">Fr, 20. August – Matrix (1999)</option>
+            <option value="2027-09-03">Fr, 3. September – Mamma Mia! (2008)</option>
+          </select>
+        </div>
+        <div class="feld">
+          <label for="paket">Paket <span class="pflicht">*</span></label>
+          <select id="paket" name="paket" required>
+            <option value="">Bitte wählen</option>
+            <option value="s">Team S (bis 5 Autos)</option>
+            <option value="m">Team M (bis 12 Autos)</option>
+            <option value="exklusiv">Ganze Wiese exklusiv</option>
+          </select>
+        </div>
+        <div class="feld">
+          <label for="autos">Anzahl Autos <span class="pflicht">*</span></label>
+          <input id="autos" name="autos" type="number" min="1" max="60" value="3" required>
+        </div>
+        <div class="feld">
+          <label for="wunschplatz">Wunschplatz</label>
+          <input id="wunschplatz" name="wunschplatz" type="text" placeholder="z. B. Reihe 2, Platz 3" maxlength="40">
+        </div>
+        <div class="feld feld-breit">
+          <label for="nachricht">Nachricht an uns</label>
+          <textarea id="nachricht" name="nachricht" rows="4"></textarea>
+        </div>
+        <div class="feld feld-breit check">
+          <input id="datenschutz" name="datenschutz" type="checkbox" required>
+          <label for="datenschutz">Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage gespeichert werden. <span class="pflicht">*</span></label>
+        </div>
+        <div class="feld-breit">
+          <button class="button" type="submit">Anfrage senden</button>
+        </div>
+      </form>
+      <div class="danke" id="danke" role="status">
+        <h2>Danke für eure Anfrage!</h2>
+        <p>Wir haben die Anfrage für <strong data-firma>euer Team</strong> erhalten und melden uns innerhalb von zwei Werktagen. Hinweis: Dies ist ein Studienprojekt – es werden keine Daten verschickt.</p>
+      </div>
+    </section>
+
+    <section class="bereich" aria-labelledby="h-wissen">
+      <h2 id="h-wissen">Gut zu wissen vor der Buchung</h2>
+      <h3>Stornierung</h3>
+      <p>Bis vier Wochen vor dem Termin könnt ihr kostenlos stornieren, danach berechnen wir die Hälfte des Paketpreises. Bei Unwetter verschieben wir den Abend ohne Mehrkosten.</p>
+      <h3>Rechnung und Budget</h3>
+      <p>Ihr erhaltet eine Rechnung auf eure Firma. Viele Teams nutzen dafür das Budget für Teamevents oder Betriebsfeiern – sprecht dazu am besten mit eurer Personalabteilung.</p>
+    </section>
+  </main>
+  <footer class="fuss">
+    <div class="fuss-innen">
+      <p>© 2027 Drive-In 2K · Studienprojekt der Kunstschule Wandsbek, keine echte Veranstaltung.</p>
+      <ul>
+        <li><a href="infos.html#impressum">Impressum</a></li>
+        <li><a href="infos.html#bildnachweis">Bildnachweis</a></li>
+        <li><a href="infos.html#faq">FAQ</a></li>
+        <li><a href="tickets.html#anfrage">Anfrage</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

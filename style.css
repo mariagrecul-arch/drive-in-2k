@@ -1,0 +1,983 @@
+/* =========================================================
+   DRIVE-IN 2K – Open-Air-Kino für Teams
+   Stil: modernes Y2K – Pixel-Art trifft plakative Schrift, nur flache Farben
+   ========================================================= */
+
+/* ---------- Eigene Schriften (T2) ---------- */
+@font-face {
+  font-family: "Unbounded";
+  src: url("../fonts/unbounded.woff2") format("woff2");
+  font-weight: 200 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "VT323";
+  src: url("../fonts/vt323.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/spacegrotesk-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/spacegrotesk-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* ---------- Farben aus dem Los (T4) ---------- */
+:root {
+  --dunkel: #2A1446;
+  --hell: #FFFBE6;
+  --akzent-1: #FFD400;
+  --akzent-2: #8A4DFF;
+
+  /* abgeleitete Hilfsfarben */
+  --nacht: #12081F;
+  --tief: #1A0B2E;
+  --lila-hell: #C3A6FF;   /* Lila für Text auf Dunkel (Kontrast 8:1) */
+  --mint: #4DFFD2;
+
+  --schrift-text: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --schrift-titel: "Unbounded", "Arial Black", sans-serif;
+  --schrift-pixel: "VT323", "Courier New", monospace;
+  --radius: 14px;
+  --max: 72rem;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--schrift-text);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--hell);
+  background-color: var(--dunkel);
+  background-image: url("../img/muster-sterne.svg");
+  background-size: 64px 64px;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; }
+
+a { color: var(--akzent-1); text-underline-offset: .18em; }
+a:hover { color: var(--hell); }
+
+/* ---------- Sichtbarer Tastaturfokus (T7) ---------- */
+:focus-visible {
+  outline: 3px solid var(--akzent-1);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Skip-Link (S6) ---------- */
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  padding: .6rem 1rem;
+  background: var(--akzent-1);
+  color: var(--dunkel);
+  font-weight: 700;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+}
+.skip:focus { top: 0; }
+
+/* ---------- Header & Navigation ---------- */
+.kopf {
+  position: relative;
+  z-index: 5;
+  border-bottom: 4px solid var(--akzent-2);
+  background: var(--tief);
+}
+.kopf-innen {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: .75rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem 1.5rem;
+}
+.logo { display: inline-flex; line-height: 0; }
+.logo img { width: 180px; height: auto; }
+
+.hauptnav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+.hauptnav a {
+  display: inline-block;
+  padding: .45rem .95rem;
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: .85rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--hell);
+  text-decoration: none;
+  border: 2px solid var(--hell);
+  background: var(--tief);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.hauptnav a:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--akzent-2); color: var(--hell); }
+.hauptnav a[aria-current="page"] {
+  background: var(--akzent-1);
+  color: var(--dunkel);
+  border-color: var(--akzent-1);
+  box-shadow: 4px 4px 0 var(--akzent-2);
+}
+
+/* ---------- Ticker-Laufband (Y2K) ---------- */
+.ticker {
+  overflow: hidden;
+  background: var(--akzent-1);
+  color: var(--dunkel);
+  font-family: var(--schrift-pixel);
+  font-size: 1.35rem;
+  white-space: nowrap;
+  border-block: 2px solid var(--dunkel);
+}
+.ticker p {
+  display: inline-block;
+  margin: 0;
+  padding: .15rem 0;
+  padding-left: 100%;
+  animation: laufband 28s linear infinite;
+}
+@keyframes laufband { to { transform: translateX(-100%); } }
+
+/* =========================================================
+   HIGHLIGHT: Pixel-Autokino im Header
+   ========================================================= */
+.szene {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: 86vh;
+  width: 100%;
+  overflow: hidden;
+  background: var(--nacht);
+  isolation: isolate;
+}
+.szene-himmel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+  z-index: -2;
+}
+/* Funkelnde Sterne als zusätzliche Ebene */
+/* Funkelnde Pixel-Sterne als zusätzliche Ebene (quadratisch, ohne Verlauf) */
+.szene::before,
+.szene::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  z-index: -1;
+  background: var(--hell);
+  box-shadow:
+    12vw 6vw var(--hell), 32vw 3vw var(--akzent-1), 58vw 7vw var(--hell),
+    76vw 12vw var(--lila-hell), 90vw 4vw var(--hell), 6vw 16vw var(--akzent-1),
+    44vw 14vw var(--hell), 66vw 2vw var(--akzent-1);
+  animation: funkeln 3.2s steps(2) infinite alternate;
+}
+.szene::after {
+  box-shadow:
+    22vw 11vw var(--hell), 46vw 2vw var(--lila-hell), 70vw 9vw var(--akzent-1),
+    84vw 15vw var(--hell), 96vw 8vw var(--akzent-1), 16vw 2vw var(--hell);
+  animation-delay: 1.6s;
+}
+@keyframes funkeln { from { opacity: .2; } to { opacity: 1; } }
+
+.sternschnuppe {
+  position: absolute;
+  top: 6%;
+  left: -10%;
+  width: 60px;
+  height: 4px;
+  background: var(--hell);
+  transform: rotate(14deg);
+  z-index: -1;
+  animation: schnuppe 9s ease-in 2s infinite;
+  opacity: 0;
+}
+@keyframes schnuppe {
+  0% { opacity: 0; translate: 0 0; }
+  4% { opacity: 1; }
+  14% { opacity: 0; translate: 60vw 14vw; }
+  100% { opacity: 0; translate: 60vw 14vw; }
+}
+
+/* Projektorstrahl von hinten auf die Leinwand */
+.strahl {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: rgba(255, 212, 0, .16);
+  clip-path: polygon(48% 100%, 52% 100%, 80% 10%, 20% 10%);
+  animation: flackern 4s steps(6) infinite;
+}
+@keyframes flackern { 0%, 100% { opacity: .55; } 30% { opacity: .75; } 60% { opacity: .45; } }
+
+.leinwand {
+  position: absolute;
+  z-index: 1;
+  left: 21%;
+  right: 21%;
+  top: 7%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1% 3%;
+  text-align: center;
+  color: var(--dunkel);
+  background: var(--hell);
+  border: 6px solid var(--nacht);
+  box-shadow: 0 0 0 4px var(--akzent-2), 10px 10px 0 4px var(--akzent-1);
+}
+.leinwand::after { /* Pfosten unter der Leinwand */
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: calc(50% - 6px);
+  width: 12px;
+  height: 32vh;
+  background: var(--nacht);
+  z-index: -1;
+}
+.leinwand .vorspann {
+  margin: 0;
+  font-family: var(--schrift-pixel);
+  font-size: clamp(1rem, 1.6vw, 1.5rem);
+  color: #5B2DB5;
+  letter-spacing: .08em;
+}
+.leinwand h1 {
+  text-transform: uppercase;
+  letter-spacing: -.02em;
+  margin: .1em 0;
+  font-family: var(--schrift-titel);
+  font-weight: 900;
+  font-size: clamp(1.25rem, 3.6vw, 3.4rem);
+  line-height: 1.05;
+  color: var(--dunkel);
+  background: none;
+  -webkit-text-fill-color: var(--dunkel);
+  text-shadow: 3px 3px 0 var(--lila-hell);
+}
+.leinwand .untertitel {
+  margin: 0;
+  font-size: clamp(.8rem, 1.25vw, 1.15rem);
+  line-height: 1.35;
+  max-width: 40em;
+}
+
+/* Reihen mit Autos (Perspektive: hinten groß, vorne klein) */
+.reihe {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.reihe-1 { bottom: 30%; gap: 4%; }
+.reihe-2 { bottom: 15%; gap: 3%; }
+.reihe-3 { bottom: 0;   gap: 5%; }
+.reihe-1 li { width: 10%; }
+.reihe-2 li { width: 14%; }
+.reihe-3 li { width: 19%; }
+
+.auto {
+  position: relative;
+  display: block;
+  line-height: 0;
+  border-radius: 8px;
+  transition: transform .2s ease, filter .2s ease;
+}
+.auto img { width: 100%; height: auto; image-rendering: pixelated; }
+.auto:hover,
+.auto:focus-visible { transform: translateY(-8%); filter: drop-shadow(0 0 10px var(--akzent-1)); }
+.auto::after { /* kleines Pixel-Schild „R1 · P2" */
+  content: attr(data-label);
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  translate: -50% 0;
+  padding: 0 .4em;
+  font-family: var(--schrift-pixel);
+  font-size: 1.1rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: var(--dunkel);
+  background: var(--akzent-1);
+  border: 2px solid var(--dunkel);
+  opacity: 0;
+  transition: opacity .2s;
+  pointer-events: none;
+}
+.auto:hover::after,
+.auto:focus-visible::after { opacity: 1; }
+
+.szene-hinweis {
+  position: absolute;
+  z-index: 3;
+  right: 1rem;
+  top: 1rem;
+  margin: 0;
+  max-width: 15rem;
+  padding: .35rem .7rem;
+  font-family: var(--schrift-pixel);
+  font-size: 1.2rem;
+  line-height: 1.2;
+  color: var(--dunkel);
+  background: var(--akzent-1);
+  border: 2px solid var(--dunkel);
+  box-shadow: 4px 4px 0 var(--akzent-2);
+}
+
+/* ---------- Dialog: Sicht aus dem Auto ---------- */
+.sicht-dialog {
+  width: min(64rem, 94vw);
+  max-height: 94vh;
+  padding: 0;
+  border: 3px solid var(--akzent-1);
+  background: var(--tief);
+  color: var(--hell);
+  overflow: auto;
+  box-shadow: 10px 10px 0 var(--akzent-2);
+}
+.sicht-dialog::backdrop { background: rgba(18, 8, 31, .85); }
+.sicht-dialog[open] { animation: einsteigen .9s cubic-bezier(.2,.8,.2,1) both; transform-origin: var(--ox, 50%) var(--oy, 80%); }
+@keyframes einsteigen {
+  0%   { transform: scale(.08); opacity: 0; }
+  60%  { transform: scale(1.03); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.fensterleiste {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .4rem .6rem .4rem 1rem;
+  background: var(--akzent-2);
+}
+.fensterleiste h2 {
+  margin: 0;
+  font-family: var(--schrift-titel);
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--hell);
+}
+.sicht {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--nacht);
+  --zoom: 1;
+  --versatz: 0%;
+}
+.sicht > img,
+.sicht-vorne img { image-rendering: pixelated; }
+.sicht-himmel { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sicht-leinwand {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 62%;
+  aspect-ratio: 2.1 / 1;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--dunkel);
+  background: var(--hell);
+  border: 5px solid var(--nacht);
+  transform: translate(calc(-50% + var(--versatz)), -50%) scale(var(--zoom));
+  transition: transform .8s ease;
+}
+.sicht-leinwand p {
+  margin: 0;
+  font-family: var(--schrift-pixel);
+  font-size: clamp(1rem, 3.6vw, 2.4rem);
+  line-height: 1.1;
+}
+.sicht-leinwand .film-ab { color: #5B2DB5; animation: blinken 1.2s steps(2) infinite; }
+@keyframes blinken { 50% { opacity: .25; } }
+.sicht-vorne {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16%;
+  display: flex;
+  justify-content: center;
+  gap: 14%;
+}
+.sicht-vorne img { width: 30%; height: auto; }
+.sicht[data-reihe="1"] .sicht-vorne { display: none; }
+.sicht[data-reihe="3"] .sicht-vorne { bottom: 18%; gap: 6%; }
+.sicht[data-reihe="3"] .sicht-vorne img { width: 26%; }
+.sicht-cockpit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: wippen 3s ease-in-out infinite;
+}
+@keyframes wippen { 50% { transform: translateY(.6%); } }
+.sicht-text { padding: 1rem 1.25rem 1.25rem; }
+.sicht-text p { margin: 0 0 .9rem; }
+.sicht-aktionen { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+/* ---------- Allgemeine Bausteine ---------- */
+main { display: block; }
+.bereich {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 3.5rem 1.25rem;
+}
+.bereich + .bereich { padding-top: 1rem; }
+.seitenkopf {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 3rem 1.25rem 1rem;
+}
+
+h1, h2, h3 { font-family: var(--schrift-titel); line-height: 1.2; }
+h1 {
+  font-size: clamp(2rem, 6vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+  margin: 0 0 1.25rem;
+  color: var(--hell);
+  text-shadow: 4px 4px 0 var(--akzent-2);
+  text-wrap: balance;
+}
+h2 {
+  font-size: clamp(1.5rem, 3.6vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -.01em;
+  margin: 0 0 1rem;
+  color: var(--akzent-1);
+  text-wrap: balance;
+}
+h2::before {
+  content: "";
+  display: inline-block;
+  width: .7em;
+  height: .7em;
+  margin-right: .35em;
+  background: url("../img/icon-stern.svg") center / contain no-repeat;
+  vertical-align: -.02em;
+}
+h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: var(--hell); }
+
+.lead { font-size: 1.2rem; max-width: 48rem; }
+.pixel { font-family: var(--schrift-pixel); font-size: 1.35rem; letter-spacing: .03em; }
+.lila { color: var(--lila-hell); }
+
+/* Glanz-Buttons im Y2K-Look */
+.button {
+  display: inline-block;
+  padding: .7rem 1.4rem;
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--dunkel);
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 3px solid var(--dunkel);
+  background: var(--akzent-1);
+  box-shadow: 5px 5px 0 var(--akzent-2);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.button:hover { color: var(--dunkel); transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--akzent-2); }
+.button:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--akzent-2); }
+.button-zweit {
+  color: var(--hell);
+  background: var(--tief);
+  border-color: var(--hell);
+}
+.button-zweit:hover { color: var(--akzent-1); }
+
+/* Fenster-Karten (Windows-2000-Feeling) */
+.raster {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.5rem;
+}
+.fenster {
+  background: var(--tief);
+  border: 3px solid var(--hell);
+  box-shadow: 8px 8px 0 var(--akzent-2);
+  overflow: hidden;
+}
+.fenster-titel {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .3rem .8rem;
+  font-family: var(--schrift-pixel);
+  font-size: 1.25rem;
+  color: var(--dunkel);
+  background: var(--akzent-1);
+  border-bottom: 3px solid var(--hell);
+}
+.fenster-titel::before {
+  content: "";
+  width: 40px;
+  height: 10px;
+  background: url("../img/fensterknoepfe.svg") left center / contain no-repeat;
+}
+.fenster-inhalt { padding: 1rem 1.25rem 1.25rem; }
+.fenster-inhalt h3 { margin-top: .25rem; }
+.fenster-inhalt img { display: block; margin-bottom: .5rem; }
+
+.zweispaltig {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+figure { margin: 0; }
+figure img {
+  display: block;
+  width: 100%;
+  border: 3px solid var(--hell);
+  box-shadow: 8px 8px 0 var(--akzent-2);
+  image-rendering: pixelated;
+}
+figcaption {
+  margin-top: .5rem;
+  font-family: var(--schrift-pixel);
+  font-size: 1.2rem;
+  color: var(--lila-hell);
+}
+
+/* Countdown */
+.countdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
+.countdown li {
+  min-width: 5.5rem;
+  padding: .5rem .75rem;
+  text-align: center;
+  background: var(--nacht);
+  border: 3px solid var(--akzent-1);
+  box-shadow: 5px 5px 0 var(--akzent-2);
+}
+.countdown strong {
+  display: block;
+  font-family: var(--schrift-pixel);
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--akzent-1);
+}
+.countdown span { font-size: .9rem; }
+
+/* Tabellen & Listen */
+.tabelle-huelle { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 34rem;
+  background: rgba(18, 8, 31, .6);
+}
+caption {
+  text-align: left;
+  padding-bottom: .5rem;
+  color: var(--lila-hell);
+}
+th, td {
+  padding: .7rem .8rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(195, 166, 255, .35);
+}
+thead th {
+  font-family: var(--schrift-pixel);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--dunkel);
+  background: var(--akzent-1);
+}
+tbody th { color: var(--akzent-1); }
+
+.ablauf { margin: 0; }
+.ablauf div {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem;
+  padding: .8rem 0;
+  border-bottom: 2px dashed rgba(138, 77, 255, .6);
+}
+.ablauf dt { font-family: var(--schrift-pixel); font-size: 1.6rem; color: var(--akzent-1); }
+.ablauf dd { margin: 0; }
+.ablauf dd strong { display: block; color: var(--hell); }
+
+.preis { font-family: var(--schrift-pixel); font-size: 2.2rem; color: var(--akzent-1); margin: .2rem 0; }
+.haken { padding-left: 1.2rem; }
+.haken li::marker { content: "✓  "; color: var(--mint); }
+
+/* Formular */
+.formular {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+  padding: 1.5rem;
+  background: rgba(18, 8, 31, .7);
+  border: 3px solid var(--hell);
+  box-shadow: 8px 8px 0 var(--akzent-2);
+}
+.feld { display: flex; flex-direction: column; gap: .3rem; }
+.feld-breit { grid-column: 1 / -1; }
+label { font-weight: 700; }
+.pflicht { color: var(--akzent-1); }
+input, select, textarea {
+  width: 100%;
+  padding: .65rem .75rem;
+  font: inherit;
+  color: var(--dunkel);
+  background: var(--hell);
+  border: 3px solid var(--dunkel);
+  border-radius: 0;
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible { border-color: var(--akzent-1); }
+.check { flex-direction: row; align-items: flex-start; gap: .6rem; }
+.check input { width: auto; margin-top: .35rem; accent-color: var(--akzent-1); }
+.check label { font-weight: 400; }
+.hinweis-klein { font-size: .95rem; color: var(--lila-hell); }
+
+.danke {
+  display: none;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  color: var(--dunkel);
+  background: var(--akzent-1);
+  border: 3px solid var(--hell);
+  box-shadow: 8px 8px 0 var(--akzent-2);
+}
+.danke h2 { color: var(--dunkel); }
+.danke:target,
+.danke.ist-sichtbar { display: block; }
+
+/* FAQ */
+details {
+  margin-bottom: .75rem;
+  background: rgba(18, 8, 31, .7);
+  border: 3px solid var(--akzent-2);
+}
+summary {
+  padding: .8rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--akzent-1);
+}
+details[open] summary { border-bottom: 1px dashed var(--akzent-2); }
+details p { margin: 0; padding: .8rem 1rem 1rem; }
+
+.bildnachweis li { margin-bottom: .4rem; }
+.hinweisbox {
+  padding: 1rem 1.25rem;
+  border-left: 6px solid var(--akzent-1);
+  background: rgba(255, 212, 0, .08);
+}
+
+.deko-icon { width: 48px; height: 48px; }
+.schwebend { animation: schweben 4s ease-in-out infinite; }
+@keyframes schweben { 50% { transform: translateY(-10px) rotate(-3deg); } }
+
+/* ---------- Footer ---------- */
+.fuss {
+  margin-top: 3rem;
+  border-top: 3px solid var(--akzent-2);
+  background: var(--nacht);
+}
+.fuss-innen {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+.fuss ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+.fuss p { margin: 0; color: var(--lila-hell); font-size: .95rem; }
+
+/* 404 */
+.fehler-zahl {
+  margin: 0;
+  font-family: var(--schrift-pixel);
+  font-size: clamp(6rem, 22vw, 12rem);
+  line-height: 1;
+  color: var(--akzent-1);
+  text-shadow: 6px 6px 0 var(--akzent-2);
+}
+
+/* ---------- Responsiv (T6) ---------- */
+@media (max-width: 52rem) {
+  .zweispaltig { grid-template-columns: 1fr; }
+  .formular { grid-template-columns: 1fr; padding: 1rem; }
+  .szene-hinweis { display: none; }
+}
+@media (max-width: 40rem) {
+  body { font-size: 1rem; }
+  .logo img { width: 150px; }
+  .hauptnav a { font-size: 1.2rem; padding: .35rem .7rem; }
+  .szene { aspect-ratio: 4 / 5; }
+  .leinwand { left: 5%; right: 5%; top: 5%; height: 40%; border-width: 4px; }
+  .strahl { clip-path: polygon(46% 100%, 54% 100%, 95% 15%, 5% 15%); }
+  .reihe-1 { bottom: 36%; gap: 3%; }
+  .reihe-2 { bottom: 18%; gap: 2%; }
+  .reihe-3 { bottom: 1%; gap: 3%; }
+  .reihe-1 li { width: 17%; }
+  .reihe-2 li { width: 22%; }
+  .reihe-3 li { width: 29%; }
+  .ablauf div { grid-template-columns: 1fr; gap: .2rem; }
+  .sicht-leinwand { width: 74%; }
+}
+
+/* ---------- Weniger Bewegung (T8) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .ticker p { padding-left: 1rem; }
+  .sternschnuppe { display: none; }
+}
+
+/* ---------- Druckansicht (T9) ---------- */
+@media print {
+  .hauptnav, .fuss, .skip, .ticker, .szene-hinweis, .reihe, .strahl, .sternschnuppe, .sicht-dialog { display: none !important; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  h1, h2, h3 { color: #000; -webkit-text-fill-color: #000; background: none; }
+  h2::before { display: none; }
+  a { color: #000; }
+  .szene { aspect-ratio: auto; max-height: none; background: none; }
+  .szene-himmel, .szene::before, .szene::after { display: none; }
+  .leinwand { position: static; border: 2px solid #000; box-shadow: none; }
+  .leinwand::after { display: none; }
+  .fenster, details, .formular, table { background: none; border-color: #000; box-shadow: none; }
+  thead th { background: #eee; color: #000; }
+}
+
+/* =========================================================
+   Programmseite: Cockpit mit Lenkrad-Pfeilen und Film-Leinwand
+   ========================================================= */
+.cockpit-szene {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: 88vh;
+  width: 100%;
+  overflow: hidden;
+  background: var(--nacht);
+  isolation: isolate;
+}
+.cockpit-himmel,
+.cockpit-rahmen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+.cockpit-himmel { z-index: -1; }
+.cockpit-rahmen { z-index: 2; pointer-events: none; }
+
+/* Leinwand im Pixel-Stil: Stufenecken, harte Kanten */
+.film-leinwand {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 14%;
+  width: 46%;
+  translate: -50% 0;
+  padding: 10px;
+  background: var(--hell);
+  clip-path: polygon(0 12px, 6px 12px, 6px 6px, 12px 6px, 12px 0, calc(100% - 12px) 0, calc(100% - 12px) 6px, calc(100% - 6px) 6px, calc(100% - 6px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 6px) calc(100% - 12px), calc(100% - 6px) calc(100% - 6px), calc(100% - 12px) calc(100% - 6px), calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 6px), 6px calc(100% - 6px), 6px calc(100% - 12px), 0 calc(100% - 12px));
+}
+.film-leinwand::before { /* Pixel-Rahmen */
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 4px solid var(--nacht);
+  pointer-events: none;
+  z-index: 2;
+}
+.filmstreifen {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  aspect-ratio: 16 / 9;
+  background: var(--nacht);
+}
+.filmstreifen::-webkit-scrollbar { display: none; }
+.filmstreifen > li {
+  position: relative;
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+.filmstreifen figure { height: 100%; }
+.filmstreifen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+  box-shadow: none;
+  image-rendering: auto;
+}
+.filminfo { /* Infos in der Ecke */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  max-width: 70%;
+  padding: .5rem .8rem .6rem;
+  color: var(--hell);
+  background: var(--dunkel);
+  border-top: 4px solid var(--akzent-1);
+  border-right: 4px solid var(--akzent-1);
+  font-family: var(--schrift-text);
+  font-size: clamp(.7rem, 1.1vw, 1rem);
+  line-height: 1.3;
+}
+.filminfo strong {
+  display: block;
+  font-family: var(--schrift-titel);
+  font-weight: 800;
+  font-size: clamp(.8rem, 1.6vw, 1.35rem);
+  text-transform: uppercase;
+  color: var(--akzent-1);
+}
+.filminfo time { font-family: var(--schrift-pixel); font-size: 1.3em; color: var(--hell); }
+.filmzaehler {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  z-index: 3;
+  margin: 0;
+  padding: 0 .5rem;
+  font-family: var(--schrift-pixel);
+  font-size: 1.3rem;
+  color: var(--dunkel);
+  background: var(--akzent-1);
+}
+
+/* Lenkrad mit Pfeil-Knöpfen */
+.lenkrad {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: -8%;
+  width: 24%;
+  aspect-ratio: 1;
+  translate: -50% 0;
+  transition: rotate .35s cubic-bezier(.3,1.6,.5,1);
+}
+.lenkrad img { width: 100%; height: 100%; image-rendering: pixelated; }
+.lenkrad.links { rotate: -12deg; }
+.lenkrad.rechts { rotate: 12deg; }
+.lenkrad-pfeil {
+  position: absolute;
+  top: 37%;
+  width: 22%;
+  aspect-ratio: 1;
+  display: none;
+  place-items: center;
+  padding: 0;
+  font-family: var(--schrift-pixel);
+  font-size: clamp(1.4rem, 3vw, 2.6rem);
+  line-height: 1;
+  color: var(--dunkel);
+  background: var(--akzent-1);
+  border: 3px solid var(--nacht);
+  box-shadow: 4px 4px 0 var(--akzent-2);
+  cursor: pointer;
+}
+.js .lenkrad-pfeil { display: grid; }
+.lenkrad-pfeil:hover { background: var(--hell); }
+.lenkrad-pfeil:active { translate: 3px 3px; box-shadow: 1px 1px 0 var(--akzent-2); }
+.lenkrad-pfeil.zurueck { left: 9%; }
+.lenkrad-pfeil.vor { right: 9%; }
+.cockpit-hinweis {
+  position: absolute;
+  z-index: 3;
+  left: 1rem;
+  bottom: 1rem;
+  margin: 0;
+  max-width: 14rem;
+  padding: .3rem .6rem;
+  font-family: var(--schrift-pixel);
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: var(--dunkel);
+  background: var(--akzent-1);
+  box-shadow: 4px 4px 0 var(--akzent-2);
+}
+.nur-ohne-js { display: inline; }
+.js .nur-ohne-js { display: none; }
+
+@media (max-width: 40rem) {
+  .cockpit-szene { aspect-ratio: 4 / 5; }
+  .film-leinwand { width: 92%; top: 6%; padding: 7px; }
+  .lenkrad { width: 74%; bottom: -16%; }
+  .cockpit-hinweis { display: none; }
+  .filminfo { max-width: 100%; right: 0; border-right: 0; }
+  .filmzaehler { right: 12px; top: 12px; font-size: 1.1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .filmstreifen { scroll-behavior: auto; }
+}
+@media print {
+  .lenkrad, .cockpit-rahmen, .cockpit-hinweis, .cockpit-himmel { display: none !important; }
+  .cockpit-szene { aspect-ratio: auto; max-height: none; background: none; }
+  .film-leinwand { position: static; translate: none; width: 100%; clip-path: none; }
+  .filmstreifen { overflow: visible; flex-wrap: wrap; aspect-ratio: auto; }
+  .filmstreifen > li { flex-basis: 48%; }
+}
